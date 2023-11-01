@@ -1,10 +1,13 @@
 ---
 title: "Preliminary tasks"
 author: "Mathieu Ferry"
+fontsize: 15pt
 format:
   html: 
       embed-resources: true
   pdf: default
+
+
 editor: visual
 ---
 
