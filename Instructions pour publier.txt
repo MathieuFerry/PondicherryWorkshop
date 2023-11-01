@@ -1,0 +1,19 @@
+Pour publier
+https://quarto.org/docs/output-formats/html-publishing.html
+https://quarto.org/docs/publishing/github-pages.html
+
+
+cd /d E:\Enseignements\Cours UVSQ\Année 2023-2024\L3 Sociologie Analyse des données\TD\Corrections TD\Corrections
+quarto render Nom.qmd
+
+
+(git init)
+
+git add .
+git commit -m "Correction25/10/23"
+
+(git remote add origin https://github.com/MathieuFerry/PondicherryWorkshop.git)
+
+git branch -M main
+
+git push -u origin main
