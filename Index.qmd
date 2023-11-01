@@ -1,0 +1,23 @@
+---
+title: "Pondicherry Winter School W2 workshop (2023)" 
+listing:
+  contents: "*.qmd"
+  sort: "date"
+  type: table
+---
+
+# Presentation
+
+This page gathers the tutorials for the W2 workshop of the [2023 Pondicherry Winter School](https://www.ifpindia.org/ifp-in-spotlight/digital-society-social-sciences-winter-school-november-13-17-2023/). I focus on exploratory textual statistical analysis.
+
+Though the workshop uses R, students do not need prior knowledge of this programming environment to go through the workshop, since we use two wonderful R shiny apps to analyse the data:
+
+-   [Radiant](https://radiant-rstats.github.io/docs/index.html) developed by Vincent Nijs for descriptive statistics (cross tabulations)
+
+-   [Rainette](https://juba.github.io/rainette/index.html) developed by Julien Barnier for textual analysis based on Max Reinert's method
+
+I also (quickly) introduce to textual data cleaning and pre-treatment based on the [quanteda](https://quanteda.io/) package (developed by Kenneth Benoit and Kohei Watanabe).
+
+In this workshop, we work on an excerpt of a database web scraped from an Indian online matrimonial website. We analyse a few of the characteristics of the advertisements, by looking at how spouse-to-be present themselves. In particular, we are interested in how they described their family and what kind of partner they say they desire.
+
+I draw from a work conducted with [Jeanne Subtil](https://www.linkedin.com/in/jeanne-subtil-a81757106/?originalSubdomain=fr). You can read our working paper here: INSERT LINK.
