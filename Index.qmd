@@ -20,4 +20,4 @@ I also (quickly) introduce to textual data cleaning and pre-treatment based on t
 
 In this workshop, we work on an excerpt of a database web scraped from an Indian online matrimonial website. We analyse a few of the characteristics of the advertisements, by looking at how spouse-to-be present themselves. In particular, we are interested in how they described their family and what kind of partner they say they desire.
 
-I draw from a work conducted with [Jeanne Subtil](https://www.linkedin.com/in/jeanne-subtil-a81757106/?originalSubdomain=fr). You can read our working paper here: INSERT LINK.
+I draw from a work conducted with [Jeanne Subtil](https://www.linkedin.com/in/jeanne-subtil-a81757106/?originalSubdomain=fr). You can read our working paper [here](/material/wp/Digitized%20Matchmaking_WP19.pdf).

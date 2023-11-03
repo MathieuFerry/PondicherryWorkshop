@@ -15,7 +15,7 @@ editor: visual
 
 Welcome to the computational/quantitative/mixed methods workshop!
 
-As part of this workshop, we (Anupam Das & I) are going to work on textual analysis. In my case, I will focus on automatic exploratory statistical tools. To this end, we will build from a research work I have been conducting with Jeanne Subtil (Sciences Po/CRIS) on online matrimonial advertisements in India. We explored online marriage-making strategies of Uttar Pradesh-based Hindu spouse-to-be individuals registered on the [Jeevansathi platform](https://www.jeevansathi.com/m0/homepage/index). Our working paper is currently available here: INSERTLINK.
+As part of this workshop, we (Anupam Das & I) are going to work on textual analysis. In my case, I will focus on automatic exploratory statistical tools. To this end, we will build from a research work I have been conducting with Jeanne Subtil (Sciences Po/CRIS) on online matrimonial advertisements in India. We explored online marriage-making strategies of Uttar Pradesh-based Hindu spouse-to-be individuals registered on the [Jeevansathi platform](https://www.jeevansathi.com/m0/homepage/index). Our working paper is currently available [here](/material/wp/Digitized Matchmaking_WP19.pdf).
 
 Before the workshop, I request you to complete two tasks:
 
@@ -27,9 +27,9 @@ The paper explains our research questions, how we constructed our database and h
 
 This involves two points:
 
--   Download the sample database used during the workshop (available on our Google Drive or from here (INSERT LINK)). There are two files where our data are stored: "sample.csv" and "sample.rdata". These are exactly the same files except that the "sample.rdata" is a format native to R (the software we use) and allows to save more pre-formatting characteristics of the data so it will be this one we will use in our session, but you can start to have a look a it by opening the csv file.
+-   Download the sample database used during the workshop (available on our Google Drive or from the following links). There are two files where our data are stored: "[sample.csv](/material/data/sample.csv)" and "[sample.rdata](/material/data/sample.rdata)". These are exactly the same files except that the "sample.rdata" is a format native to R (the software we use) and allows to save more pre-formatting characteristics of the data so it will be this one we will use in our session, but you can start to have a look a it by opening the csv file.
 
--   Download the "TextualAnalysis.R" file. It contains the R script we will use during the workshop. If you are not familiar with programming and/or R language, don't worry! Though we will need these lines of code, we will not spend time actually writing code lines during the workshop and we will rather play with apps ("shiny apps") that are more user-friendly.
+-   Download the "[TextualAnalysis.R](/material/code/TextualAnalysis.R)" file. It contains the R script we will use during the workshop. If you are not familiar with programming and/or R language, don't worry! Though we will need these lines of code, we will not spend time actually writing code lines during the workshop and we will rather play with apps ("shiny apps") that are more user-friendly.
 
 If you are already an R user and you are familiar with importing data in RStudio from your computer, feel free to use RStudio from your computer during the workshop and ignore the following instructions.
 

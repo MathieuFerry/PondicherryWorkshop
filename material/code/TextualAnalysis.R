@@ -25,7 +25,9 @@ radiant::radiant_window()
 
 
 # Textual analysis of family description ----------------------------------
-setwd("E:/Enseignements/Pondicherry Winter school/Textual analysis/Workshop")
+#Path to where the data is loaded on cloud
+#Replace with your own path if you are working from your own computer and not from the cloud
+setwd("/cloud/project")
 load("sample.rdata")
 
 
