@@ -12,7 +12,9 @@ quarto render Nom.qmd
 git add .
 git commit -m "Correction25/10/23"
 
-(git remote add origin https://github.com/MathieuFerry/PondicherryWorkshop.git)
+(
+git remote add origin https://github.com/MathieuFerry/PondicherryWorkshop.git
+)
 
 git branch -M main
 
