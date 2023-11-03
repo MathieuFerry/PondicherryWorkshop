@@ -11,11 +11,11 @@ format:
 editor: visual
 ---
 
-# Preliminary tasks for W2
+# Preliminary tasks for W3
 
 Welcome to the computational/quantitative/mixed methods workshop!
 
-As part of this workshop, we (Anupam Das & I) are going to work on textual analysis. In my case, I will focus on automatic exploratory statistical tools. To this end, we will build from a research work I have been conducting with Jeanne Subtil (Sciences Po/CRIS) on online matrimonial advertisements in India. We explored online marriage-making strategies of Uttar Pradesh-based Hindu spouse-to-be individuals registered on the [Jeevansathi platform](https://www.jeevansathi.com/m0/homepage/index). Our working paper is currently available [here](/material/wp/Digitized Matchmaking_WP19.pdf).
+As part of this workshop, we (Anupam Das & I) are going to work on textual analysis. In my case, I will focus on automatic exploratory statistical tools. To this end, we will build from a research work I have been conducting with Jeanne Subtil (Sciences Po/CRIS) on online matrimonial advertisements in India. We explored online marriage-making strategies of Uttar Pradesh-based Hindu spouse-to-be individuals registered on the [Jeevansathi platform](https://www.jeevansathi.com/m0/homepage/index). Our working paper is currently available [here](/material/wp/Digitized%20Matchmaking_WP19.pdf).
 
 Before the workshop, I request you to complete two tasks:
 
