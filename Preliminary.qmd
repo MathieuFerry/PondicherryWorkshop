@@ -23,6 +23,12 @@ Before the workshop, I request you to complete two tasks:
 
 The paper explains our research questions, how we constructed our database and how we conducted our analysis. We will expand on this research during the workshop and we will analyse a subset of the data. It is important to read the paper beforehand so as to have a better understanding of what we are working on.
 
+::: {}
+
+<iframe width="100%" height="700" src="/material/wp/Digitized%20Matchmaking_WP19.pdf" ></iframe>
+
+:::
+
 ## 2. Get ready to conduct statistical textual analysis during the workshop
 
 This involves two points:
