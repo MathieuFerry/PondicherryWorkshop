@@ -13,7 +13,7 @@ editor: visual
 
 ![](Bandeau.jpg)
 
-# Preliminary tasks for W3
+# 1. Preliminary tasks for W3
 
 Welcome to the computational/quantitative/mixed methods workshop!
 

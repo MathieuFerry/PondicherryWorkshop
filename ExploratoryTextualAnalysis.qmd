@@ -12,7 +12,7 @@ editor: visual
 
 ![](Bandeau.jpg)
 
-# Exploratory textual analysis
+# 3. Exploratory textual analysis
 
 Now that we are more familiar with the database, and, hopefully, with the R environment, let's turn to analyzing the content of the two textual variables, i.e. the family description of the spouse-to-be and the desired partner on matrimonial advertisements.
 

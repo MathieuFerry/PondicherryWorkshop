@@ -2,9 +2,9 @@
   {
     "listing": "/Index.html",
     "items": [
+      "/Preliminary.html",
       "/Discovering.html",
-      "/ExploratoryTextualAnalysis.html",
-      "/Preliminary.html"
+      "/ExploratoryTextualAnalysis.html"
     ]
   }
 ]

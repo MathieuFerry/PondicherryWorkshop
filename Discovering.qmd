@@ -12,7 +12,7 @@ editor: visual
 
 ![](Bandeau.jpg)
 
-# Discovering the data
+# 2. Discovering the data
 
 ## Preparation of the analysis
 

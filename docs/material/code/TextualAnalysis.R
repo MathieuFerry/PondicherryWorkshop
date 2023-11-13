@@ -121,7 +121,7 @@ textplot_wordcloud(dtm, random_order = FALSE, rotation = 0.25,min_size =1,max_wo
 
 
 
-res <- rainette(dtm, k = 8)
+res <- rainette(dtm, k = 6)
 
 rainette_explor(res, dtm=dtm, corpus_src=corpus)
 
