@@ -6,6 +6,8 @@ listing:
   type: table
 ---
 
+![](Bandeau.jpg)
+
 # Presentation
 
 This page gathers the statistical textual analysis tutorials for the W3 workshop of the [2023 Pondicherry Winter School](https://www.ifpindia.org/ifp-in-spotlight/digital-society-social-sciences-winter-school-november-13-17-2023/). The workshop will be led by Anupam Das, Aasim Khan and myself. I focus on exploratory textual statistical analysis.

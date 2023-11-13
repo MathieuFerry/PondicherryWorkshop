@@ -16,6 +16,9 @@ git commit -m "Correction25/10/23"
 git remote add origin https://github.com/MathieuFerry/PondicherryWorkshop.git
 )
 
+
+git add .
+git commit -m "Workshop tutorials"
 git branch -M main
 
 git push -u origin main

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Textual Analysis – discovering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<p><img src="Bandeau.jpg" class="img-fluid"></p>
+<section id="discovering-the-data" class="level1">
+<h1>Discovering the data</h1>
+<section id="preparation-of-the-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="preparation-of-the-analysis">Preparation of the analysis</h2>
+<p>In this tutorial, we are first going to prepare R for the upcoming statistical analysis by downloading and loading necessary R packages into our environment. Packages are collections of functions that allow to use different statistical tools depending on your needs.</p>
+<p>Here, I am requesting you to download six packages. “dplyr” is a useful data management package, “radiant” opens a “shiny app” that allows to run statistical analyses without coding, “quanteda” and its two dependencies “quanteda.textstats” and “quanteda.textstats” are used for pre-treating text as data (it also contains a lot of textual analysis tools which we are not using here) and finally “rainette” is a “shiny app” to conduct exploratory textual analysis using the Reinert’s method.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">##For this workshop, we will need the following packages that you first need to install by running these commands:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>,<span class="at">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>) <span class="co">#for data management if needed</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"radiant"</span>,<span class="at">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>) <span class="co">#for descriptive statistics</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"quanteda"</span>, <span class="at">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>) <span class="co">#for textual data pre-treatment and basic analysis</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"quanteda.textstats"</span>,<span class="at">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"quanteda.textstats"</span>,<span class="at">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rainette"</span>,<span class="at">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>) <span class="co">#for exploratory textual analysis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To run the above R code lines, highlight them with your mouse cursor and then click on “run” (or type ctrl+Enter on the keyboard). There should be a lot of red lines appearing on the console but after a while this should stop and you should be fine…</p>
+<p>Then you can just load these packages into your R environment by running the below lines.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">##Then we can just load the packages</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(radiant)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rainette)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After that, we are going to load the database. If you are on the Posit server, you can just run the below lines to load the “sample.rdata” into your environment.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/cloud/project"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"sample.rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="inspecting-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="inspecting-the-data">Inspecting the data</h2>
+<p>You can have a look at the data by running the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="view_data.PNG" class="img-fluid"></p>
+<p>The data contains 1,000 rows (1,000 matrimonial advertisements) and 11 columns (11 variables, corresponding to 11 different types of information collected from the matrimonial advertisement).</p>
+<p>This database is an excerpt from the web-harvested matrimonial advertisement profiles that we collected for the “Matchmaking digitized” paper. If you remember, we harvested all Hindu male and female profiles based in Uttar Pradesh. Here we randomly selected 1,000 profiles from this list by adding the following condition: no missing variable on the selected 11 types of information. Missing information is an important feature is web-harvested profiles on network platforms as we talked about in the lecture. For simplicity, we do not engage here on this issue.</p>
+<p>Now, let’s inspect the data more closely by using the radiant shiny app.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>radiant<span class="sc">::</span><span class="fu">radiant_window</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You should see something like the picture below appearing. You again need to load the “sample.rdata” database by clicking on “Load” as indicated on the picture.</p>
+<p><img src="radiant_app.PNG" class="img-fluid"></p>
+<p>This gives you another preview of the database.</p>
+</section>
+<section id="exploring-categorical-variables" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-categorical-variables">Exploring categorical variables</h2>
+<p>Let’s have a more detailed description of the database. Of the 11 variables,</p>
+<ul>
+<li><p>7 are “factor” variables, i.e.&nbsp;they are categorical variables</p>
+<ul>
+<li><p>Sex: corresponding to the gender of the spouse-to-be</p></li>
+<li><p>Age: corresponding to the age of the spouse-to-be</p></li>
+<li><p>Education: highest degree of the spouse-to-be</p></li>
+<li><p>Caste: declared caste recoded as Brahmin, other upper caste, OBC, Dalit</p></li>
+<li><p>Family_income: declared total family income</p></li>
+<li><p>Family: family type (joint or nuclear)</p></li>
+<li><p>Who_runs_page: manager of the advertisement profile (Self if spouse-to-be, parent, sibling or other, including matrimonial agency)</p></li>
+</ul></li>
+</ul>
+<p>Note that all these variables have already been cleaned and recoded from the matrimonial advertisements (see the slides of the lecture where an example of a profile is provided).</p>
+<p>We use the “Visualize” tab to have a quick plot describing our dataset based on these features. Play around the features of the tab to get a “nice” figure! Below is a suggestion.</p>
+<p>Thanks to this, we are to see in a snapshot that we have much more male rather than female advertisement profiles, that the modal age category is 28 to 31, most of the profiles are at least graduate, upper caste, come from nuclear-type families which earn more than 17.5 lakh a year. Quite a selected sample compared to the Hindu population in Uttar Pradesh! Finally, though about half of the advertisements are managed by the spouse-to-be themselves, parents and siblings are also often involved.</p>
+<p><img src="sample_visualize_factor.png" class="img-fluid"></p>
+<p>Who runs the page is very much associated to the gender of the spouse-to-be. We can use the “Pivot” tab to create a cross-table with row percentages (gender is the “independent” variable and is represented in the rows and profile management is the column variable as it is here the “dependent” variable):</p>
+<p><img src="pivot_sex_whoruns.PNG" class="img-fluid"></p>
+<p>We can do other explorations. For instance, does age vary depending on gender? As can be seen below, women tend to be on the whole younger than men on this matrimonial advertisement platform, possibly reflecting gender-specific age norms in marriage practices.</p>
+<p><img src="pivot_sex_age.PNG" class="img-fluid"></p>
+</section>
+<section id="exploring-numeric-variables" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-numeric-variables">Exploring numeric variables</h2>
+<p>The 8th and 9th variables, called Desc_family and Desc_desiredpartner consists in “character” variable, i.e.&nbsp;they consist in text strings on the matrimonial ads where the family of the spouse-to-be is described and where the characteristics of the desired partner are indicated. We will look more closely on how to analyse these textual variables in the next session so we skip them for now.</p>
+<p>The last two variables of the dataframe are nwords_family and nwords_despartner. I created “numeric” variables where I counted the number of words used to describe one’s family and one’s desired partner for each matrimonial advertisement.</p>
+<p>Let’s have a look at how these data looks like, first from the “Visualization” tab.</p>
+<p>The histograms of the distributions for these two distributions suggest that we have two “skewed” distributions: most of the people write less than 50 words, but a few seem to write longer descriptions, so that the “tail” of the distribution expands a lot on the right.</p>
+<p>Notice also how the mode for desired partner is at a lower value, suggesting that matrimonial advertisements write more on who their family are, rather than what kind of partner they are aspiring to…</p>
+<p><img src="nwords_distribution.png" class="img-fluid"></p>
+<p>You can go to the “Explore” and analyse univariate descriptive statistics for these two numeric variables. Indeed, the mean, median and mode indicate that there is more written on family than desired partners on matrimonial advertisements!</p>
+<p>The gap between the mean and the median points to the asymmetry of the distributions that we already identified in the histogram plot (regarding family and family description, as a “centrality” indicator, the mean is higher than the median because it is an indicator that is sensitive to outliers, and here the outliers are those who write a lot!)</p>
+<p>SD here means “standard deviation” and it is an indicator of the dispersion of the distributions. As the standard deviation of the number of words to describe one’s family is higher than for the desired partner, it suggests a higher dispersion of the length of family descriptions (there are both very short and very long family descriptions whereas for the desired partner descriptions, it is more centered). This idea is also quite well visualized on the preceding figure.</p>
+<p><img src="descriptivestat_numeric.PNG" class="img-fluid" width="472"></p>
+<p>We can also explore whether the length of the family and desired partner descriptions vary according to the gender of the spouse-to-be and to who manages the advertisement profile.</p>
+<p>We can do this exploration in the “Explore” tab to obtain tables or in the “Visualize” tab to obtain nice plots. Here, we clearly see that the length of the family description clearly depends on who manages the profile: when it is a parent or a sibling, it is on average longer than when the profile is managed by the spouse-to-be.</p>
+<p>Regarding the length of descriptions of the desired partner, they are on average slightly for female profiles (aspiring a male partner) than the reverse. Variations depending on who manages the profile seem less salient.</p>
+<p><img src="nwords_by_who_sex.png" class="img-fluid"></p>
+<p>Can you think of other factors that may affect how much people write about their family and about their desired partner? Education, socioeconomic level, age… try to think about mechanisms, and explore them with the data!</p>
+</section>
+<section id="to-conclude" class="level2">
+<h2 class="anchored" data-anchor-id="to-conclude">To conclude</h2>
+<p>In this tutorial, we have explored our sample database of matrimonial advertisements. In so doing, we have described different types of variables (categorical and numerical) and how we can use cross-tables to analyse how one variable is associated to the other. Plots are a nice way to convey information.</p>
+<p>Radiant is a relatively easy app to handle and explore data.</p>
+<p>Note that we have not entered the fascinating worlds of inferential statistics (statistical tests) and multivariate analysis (regressions) here but the app offers these possibilities. Feel free to explore the many possible analyses!</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

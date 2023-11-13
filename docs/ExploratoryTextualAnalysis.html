@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Textual Analysis – exploratorytextualanalysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<p><img src="Bandeau.jpg" class="img-fluid"></p>
+<section id="exploratory-textual-analysis" class="level1">
+<h1>Exploratory textual analysis</h1>
+<p>Now that we are more familiar with the database, and, hopefully, with the R environment, let’s turn to analyzing the content of the two textual variables, i.e.&nbsp;the family description of the spouse-to-be and the desired partner on matrimonial advertisements.</p>
+<p>Our initial questions to solve in this tutorial are pretty basic but will guide us throughout the statistical analyses:</p>
+<ul>
+<li><p>How are families described on matrimonial advertisements? I.e., what characteristics of families (moral values, cultural background, economic assets, …) are deemed as salient in the presentation of a spouse-to-be? Do presentations conform to one typical image corresponding to a unique norm of families or are there multiple variations of these normative presentations of one’s family?</p></li>
+<li><p>In an exploratory textual analysis framework, this translates as asking: what are the most frequent words used to describe one’s family?</p>
+<ul>
+<li><p>Further, what are the words that are frequently mentioned conjointly? What are the words that are less frequently mentioned together?</p></li>
+<li><p>What are the descriptions that look similar, those that look different (in terms of word use)?</p></li>
+</ul></li>
+</ul>
+<p>Our approach is considering each family description as a “bag of word.” In the analysis, we do not really take into account the order and sequencing of words in the descriptions (e.g.&nbsp;the order of words in a sentence, the sequencing of ideas in a paragraph…), we simply are interested in whether words are mentioned or not, and in the co-occurrence of these words in a description.</p>
+<section id="family-descriptions-text-pre-treatment" class="level2">
+<h2 class="anchored" data-anchor-id="family-descriptions-text-pre-treatment">Family descriptions: text pre-treatment</h2>
+<p>Let’s first load our packages and our dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">##Then we can just load the packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(radiant)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rainette)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/cloud/project"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"sample.rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The first step is to transform our “text” variable in the sample database into a specific “quanteda” object called corpus:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">##Transform to corpus</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(sample<span class="sc">$</span>Desc_family)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The corpus is a bundle of texts, here the 1000 different family descriptions on each different ads.</p>
+<p>Based on this object, we can then create “tokens,” corresponding to the words of the texts. In this process, we clean up a bit our object for the analysis:</p>
+<ul>
+<li><p>We remove punctuation (dots, commas, etc) and symbols (e.g.&nbsp;* $ €…) so that we do not risk considering them as words</p></li>
+<li><p>We also decided to remove numbers written as figures (and not in letters). A different choice could have been made but I think it’s ok to remove them.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove punctuation &amp; symbols</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>tok <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corpus, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">remove_symbols=</span><span class="cn">TRUE</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">remove_numbers =</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We also specifically remove a number of “stop words” from the analysis. These all correspond to very common words/expressions in English. We consider that they do not help characterizing the diversity of family descriptions here so we remove them from the bundle of words. We have also removed a number of very common words in these descriptions that are not very informative, relating to the description of the family members. The argument is that we are interested in what is said about the family members but not in qualifying their presence or not.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stopwords</span>(<span class="st">"en"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "i"          "me"         "my"         "myself"     "we"        
+  [6] "our"        "ours"       "ourselves"  "you"        "your"      
+ [11] "yours"      "yourself"   "yourselves" "he"         "him"       
+ [16] "his"        "himself"    "she"        "her"        "hers"      
+ [21] "herself"    "it"         "its"        "itself"     "they"      
+ [26] "them"       "their"      "theirs"     "themselves" "what"      
+ [31] "which"      "who"        "whom"       "this"       "that"      
+ [36] "these"      "those"      "am"         "is"         "are"       
+ [41] "was"        "were"       "be"         "been"       "being"     
+ [46] "have"       "has"        "had"        "having"     "do"        
+ [51] "does"       "did"        "doing"      "would"      "should"    
+ [56] "could"      "ought"      "i'm"        "you're"     "he's"      
+ [61] "she's"      "it's"       "we're"      "they're"    "i've"      
+ [66] "you've"     "we've"      "they've"    "i'd"        "you'd"     
+ [71] "he'd"       "she'd"      "we'd"       "they'd"     "i'll"      
+ [76] "you'll"     "he'll"      "she'll"     "we'll"      "they'll"   
+ [81] "isn't"      "aren't"     "wasn't"     "weren't"    "hasn't"    
+ [86] "haven't"    "hadn't"     "doesn't"    "don't"      "didn't"    
+ [91] "won't"      "wouldn't"   "shan't"     "shouldn't"  "can't"     
+ [96] "cannot"     "couldn't"   "mustn't"    "let's"      "that's"    
+[101] "who's"      "what's"     "here's"     "there's"    "when's"    
+[106] "where's"    "why's"      "how's"      "a"          "an"        
+[111] "the"        "and"        "but"        "if"         "or"        
+[116] "because"    "as"         "until"      "while"      "of"        
+[121] "at"         "by"         "for"        "with"       "about"     
+[126] "against"    "between"    "into"       "through"    "during"    
+[131] "before"     "after"      "above"      "below"      "to"        
+[136] "from"       "up"         "down"       "in"         "out"       
+[141] "on"         "off"        "over"       "under"      "again"     
+[146] "further"    "then"       "once"       "here"       "there"     
+[151] "when"       "where"      "why"        "how"        "all"       
+[156] "any"        "both"       "each"       "few"        "more"      
+[161] "most"       "other"      "some"       "such"       "no"        
+[166] "nor"        "not"        "only"       "own"        "same"      
+[171] "so"         "than"       "too"        "very"       "will"      </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove stop words &amp; words relating to specific family members</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>tok <span class="ot">&lt;-</span> <span class="fu">tokens_remove</span>(tok,<span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"en"</span>),<span class="st">"mother"</span>,<span class="st">"father"</span>,<span class="st">"mom"</span>,<span class="st">"dad"</span>,<span class="st">"sister"</span>,<span class="st">"sisters"</span>,<span class="st">"bro"</span>,<span class="st">"sis"</span>,<span class="st">"brother"</span>,<span class="st">"brothers"</span>,<span class="st">"married"</span>,<span class="st">"unmarried"</span>,<span class="st">"parent"</span>,<span class="st">"parents"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Because I wanted a have clean and easily interpretable analysis, I removed words of less than 3 letters.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Keep words with at least three letters</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>tok<span class="ot">&lt;-</span><span class="fu">tokens_select</span>(tok,<span class="at">min_nchar=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, I create a “document-feature matrix” based on the counting of each “token” in each text. For instance, text 1 (family description of the first row in the sample database), corresponds to the following family description:</p>
+<p><em>“Our Family is very simple and having moderate values..I am retired Bank employees. My wife Kirtima Vaish is a homemaker and my two younger sons IT professionals . His youngest Brother in TCS San Francisco U S A. Second Youngest Brother coordinater in Sankalp India . Now we are living in Bangalore. He is currently living in Bangalore .We have two houses,one in Bangalore and another one in Faizabad.”</em></p>
+<p>After applying the corpus, token and pre-treatment, this amounts to counting for this text that family is a token mentioned once, simple is mentioned once, moderate once, etc… (the full matrix is not depicted here it has more columns and of course more rows).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create document-feature matrix (keep in lower case)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(tok, <span class="at">tolower =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Again, I now apply quite an arbitrary rule by retaining only the tokens that are mentioned at least ten times in all the corpus. I do this so that rarely frequently mentioned tokens do not structure heavily the output of the analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Keep relatively frequent terms</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">dfm_trim</span>(dtm, <span class="at">min_docfreq =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="textual-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="textual-analysis">Textual analysis</h2>
+<section id="a-word-cloud-as-a-first-naive-exploration" class="level3">
+<h3 class="anchored" data-anchor-id="a-word-cloud-as-a-first-naive-exploration">A word cloud as a first naive exploration</h3>
+<p>After all this hard work, let’s conduct our first exploratory analysis! First, let’s just plot a word cloud where the size of words is proportional to their frequency in the corpus.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#First a word cloud</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dtm, <span class="at">random_order =</span> F, <span class="at">rotation =</span> <span class="fl">0.25</span>,<span class="at">min_size =</span><span class="dv">1</span>,<span class="at">max_words =</span> <span class="dv">100</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">8</span>, <span class="st">"Dark2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ExploratoryTextualAnalysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Unsurprisingly, family is the most frequent term! Followed by younger, elder, probably characterizing “younger brother/sister”.</p>
+<p>The other words all relate to the economic position of the household, either in terms of activity status (retired, housewife, working), occupation (engineer, business), economic sector (private/government sector) or social class (middle class). The other frequent words but relatively less (in green) also indicate the same kind of words to describe one’s family, with the addition that location also seems quite salient (Delhi, Bangalore…).</p>
+<p>The word cloud is thus not only a nice plot, it is also informative on what are the most frequent tokens used, possibly indicating the most frequent topic in these descriptions. Here, it seems that when describing their family, spouse-to-be talk about the family economic position (and not about say, the hobbies of the family members).</p>
+</section>
+<section id="reinerts-method-clustering-family-descriptions" class="level3">
+<h3 class="anchored" data-anchor-id="reinerts-method-clustering-family-descriptions">Reinert’s method: clustering family descriptions</h3>
+<p>Next, we turn to a more complex statistical tool to analyse the diversity of the family descriptions. Based on the “document-feature matrix,” we use the chi-square distance to calculate the similarities and differences between family descriptions. The method is based on an algorithm of Divisive Hierarchical Clustering (DHC), which can be described as such:</p>
+<ul>
+<li><p>We split the documents into two groups, such that the two groups are as “different” as possible.</p></li>
+<li><p>This difference is achieved by the fact that tokens that are frequently mentioned in one group are not frequently mentioned in the other group and vice versa.</p></li>
+<li><p>From the two groups of documents, the largest group is again split up into two groups.</p></li>
+<li><p>From the three groups of documents, the largest group is again split up into three groups.</p></li>
+</ul>
+<p>Etc…</p>
+<p>A more complete and precise description of the algorithm can be found <a href="https://juba.github.io/rainette/articles/algorithms_en.html">here</a>.</p>
+<p>This step is achieved by running the following R command (here I ask the algorithm to split the documents into a maximum of six groups):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">rainette</span>(dtm, <span class="at">k =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in rainette(dtm, k = 6): some documents don't have any term, they won't
+be assigned to any cluster.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  Clustering...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  Done.</code></pre>
+</div>
+</div>
+<p>How many groups or clusters of documents should we keep in the final partition?</p>
+<p>This is an exploratory tool so the best way is to first analyse the two groups and interpret how they are different from each other, then the three groups, etc… At each step, we analyse what distinction emerges with the new cluster.</p>
+<p>As a rule of thumb:</p>
+<ul>
+<li><p>Keep as many groups as you can interpret them</p></li>
+<li><p>Remember that your goal is to be able able to interpret distinctions in your corpus so it is not ideal to have too many clusters! Personally, I find that beyond 8-10 clusters, classifications are not informative as it is hard to grasp at a glance the full distinctions.</p></li>
+</ul>
+<p>Let’s now have a look at the clusters of documents and how they are structured by distinct tokens. This is done by a very nice shiny app:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rainette_explor</span>(res, <span class="at">dtm=</span>dtm, <span class="at">corpus_src=</span>corpus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>A new window pops up. Let’s set the cursor to two clusters. The DHC has cut the family descriptions into a cluster gathering 82 percent of the descriptions and another one corresponding to 18 percent of the descriptions (notice that 15 clusters could not be assigned to any cluster because after pre-treating the texts, they did not contain any relevant term).</p>
+<p>Each cluster is characterized by its most specific tokens, i.e.&nbsp;broadly said the tokens that are often mentioned in the first cluster but not in the second cluster.</p>
+<ul>
+<li><p>The first cluster corresponds to the descriptions that mention “family”, while this term is not frequently mentioned in the second cluster… The second one corresponds to descriptions that frequently mention “one”… These are not very informative tokens. One could think of re-running the analysis by adding these terms to the stop word list.</p></li>
+<li><p>The first cluster is characterized by the phrases “middle class”, “simple values”, “nuclear family”, “manager”, “homemaker”…</p></li>
+<li><p>The second one is characterized by the terms “housewife”, “farmer”, “private sector”, “business”…</p></li>
+</ul>
+<p><img src="rainette1.PNG" class="img-fluid"></p>
+<p>As it may be difficult to interpret the specificity of each cluster, it may be good to come back to the descriptions and so how the most specific terms are used in the sentences. On the bottom right of the shiny app panel, you can click on “Cluster documents:”</p>
+<p><img src="rainette2.PNG" class="img-fluid"></p>
+<p>Here we look at the first cluster and how the token “middle” is used. It pops up with the phrase “middle class”. Matrimonial ads of the first cluster specifically describe their family as being a “middle class” one.</p>
+<p>We can now turn to analyse three clusters, four clusters etc… I here stop at four clusters which I find informative and rather distinct from each other. It is nice to try to label them to summarize the interpretation.</p>
+<ul>
+<li><p>The first cluster corresponds to the clusters of “Family composition and values” (32 percent of the descriptions)</p></li>
+<li><p>The second cluster seems to be mostly about studies high professional achievements: “Family members’ educational curriculum and professional achievements” (31 percent)</p></li>
+<li><p>The third cluster frequently has mentions of the army, the government sector and the mother/wife is often described as a “housewife”, we can label it the “Male members’ position in the army/govt sector and housewife female members” (20 percent)</p></li>
+<li><p>The fourth cluster again corresponds to a frequent use of the token “housewife” and the work positions correspond more to private ones (business, farmer): “Male members’ private sector position and housewife female members” (18 percent)</p></li>
+</ul>
+<p><img src="rainette_4clusters.PNG" class="img-fluid"></p>
+<p>All in all, all these types of family descriptions suggest that family is mostly described in terms of the socioeconomic achievements of the family members. The first cluster comes as an exception as the cluster insists more on family values, but even the family’s socioeconomic position is described as a whole with the very frequently used term “middle class”.</p>
+<p>Do these four types of family descriptions correspond to different characteristics of the matrimonial advertisements? For instance, are profiles managed by family members rather than the spouse-to-be associated to certain types of family descriptions?</p>
+<p>To investigate this question, we save the clusters to our sample database as a new variable which we are going to open in the radiant app.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">###Decide to keep the partition in 4 classes</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sample<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">cutree</span>(res, <span class="at">k =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(sample,<span class="at">file=</span><span class="st">"sample2.rdata"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Explore how these clusters correspond to specific profiles (male/female, ...)</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>radiant<span class="sc">::</span><span class="fu">radiant_window</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After loading the “sample2.rdata” file in the radiant app, we use the “Pivot” tab to investigate the associations between family description types and other matrimonial ad characteristics.</p>
+<p>As can be seen from the pivot table and the plot, profiles run by the spouse-to-be themselves are slightly more often characterized by the first type of description (family composition and values). This is also the case of “others” who correspond to marriage brokers: they seem to reproduce a form of non-specific and general type of family description that corresponds to the ideal of a family.</p>
+<p>The second (and also to a certain extant, the third) type of family descriptions (educational and professional achievements) is more characteristic of family members (parents and siblings). Insisting on the high educational and professional achievements is more salient to these members (than to the spouse-to-be themselves) who may be seeing marriage as a pure assortative matching process in terms of socioeconomic sorting.</p>
+<p>The fourth type is a more spouse-to-be specific family description type.</p>
+<p><img src="clusters_who_runs.PNG" class="img-fluid"></p>
+<p>You can explore other salient distinctions.</p>
+</section>
+<section id="compound-tokens" class="level3">
+<h3 class="anchored" data-anchor-id="compound-tokens">Compound tokens?</h3>
+<p>One thing we have noticed in the course of this analysis is that some words come as single and separate tokens whereas they come as phrases, such as middle class, government sector, etc. We can try and detect these compound tokens and treat them as single terms in the analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>tok <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corpus)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>col <span class="ot">&lt;-</span> tok <span class="sc">|&gt;</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"en"</span>),<span class="st">"mother"</span>,<span class="st">"father"</span>,<span class="st">"sister"</span>,<span class="st">"sisters"</span>,<span class="st">"mom"</span>,<span class="st">"dad"</span>,<span class="st">"bro"</span>,<span class="st">"sis"</span>,<span class="st">"brother"</span>,<span class="st">"brothers"</span>,<span class="st">"married"</span>,<span class="st">"unmarried"</span>,<span class="st">"parent"</span>,<span class="st">"parents"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_select</span>(<span class="at">pattern =</span> <span class="st">"^[A-Z]"</span>, <span class="at">valuetype =</span> <span class="st">"regex"</span>, </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">case_insensitive =</span> T, <span class="at">padding =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  quanteda.textstats<span class="sc">::</span><span class="fu">textstat_collocations</span>(<span class="at">min_count =</span> <span class="dv">5</span>, <span class="at">tolower =</span> T)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(col)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      collocation count count_nested length   lambda        z
+1      house wife    88            0      2 6.085893 29.45430
+2  private sector    58            0      2 6.526536 25.53734
+3    middle class    83            0      2 9.192984 22.43732
+4      home maker    54            0      2 7.807280 22.32270
+5    well settled    44            0      2 4.511104 21.74900
+6 working private    57            0      2 4.561429 21.12930</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>comp_toks2 <span class="ot">&lt;-</span> <span class="fu">tokens_compound</span>(tok, <span class="at">pattern =</span> col)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>comp_toks2<span class="ot">&lt;-</span><span class="fu">tokens</span>(comp_toks2,<span class="at">remove_punct =</span> T,<span class="at">remove_symbols=</span><span class="cn">TRUE</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">remove_numbers =</span><span class="cn">TRUE</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>comp_toks2 <span class="ot">&lt;-</span> <span class="fu">tokens_remove</span>(comp_toks2,<span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"en"</span>),<span class="st">"mother"</span>,<span class="st">"father"</span>,<span class="st">"sister"</span>,<span class="st">"sisters"</span>,<span class="st">"mom"</span>,<span class="st">"dad"</span>,<span class="st">"bro"</span>,<span class="st">"sis"</span>,<span class="st">"brother"</span>,<span class="st">"brothers"</span>,<span class="st">"married"</span>,<span class="st">"unmarried"</span>,<span class="st">"parent"</span>,<span class="st">"parents"</span>))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>comp_toks2<span class="ot">&lt;-</span><span class="fu">tokens_select</span>(comp_toks2,<span class="at">min_nchar=</span><span class="dv">3</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(comp_toks2, <span class="at">tolower =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">dfm_trim</span>(dtm, <span class="at">min_docfreq =</span> <span class="dv">10</span>)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dtm, <span class="at">random_order =</span> <span class="cn">FALSE</span>, <span class="at">rotation =</span> <span class="fl">0.25</span>,<span class="at">min_size =</span><span class="dv">1</span>,<span class="at">max_words =</span> <span class="dv">100</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">8</span>, <span class="st">"Dark2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ExploratoryTextualAnalysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">rainette</span>(dtm, <span class="at">k =</span> <span class="dv">6</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rainette_explor</span>(res, <span class="at">dtm=</span>dtm, <span class="at">corpus_src=</span>corpus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="textual-analysis-of-the-desired-partner" class="level2">
+<h2 class="anchored" data-anchor-id="textual-analysis-of-the-desired-partner">Textual analysis of the desired partner</h2>
+<p>Next, let’s turn to the descriptions of the desired partner.</p>
+<section id="the-script-of-the-ideal-partner" class="level3">
+<h3 class="anchored" data-anchor-id="the-script-of-the-ideal-partner">The “script” of the ideal partner</h3>
+<p>We use the same procedure and pre-treatment by running the code below. In the word cloud of the most frequent terms, do the adjectives look any family to gender scripts of the ideal desired matched partner?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(sample<span class="sc">$</span>Desc_desiredpartner)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove punctuation &amp; symbols</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>tok <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corpus, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">remove_symbols=</span><span class="cn">TRUE</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">remove_numbers =</span><span class="cn">TRUE</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove stop words &amp; words relating to specific family members</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>tok <span class="ot">&lt;-</span> <span class="fu">tokens_remove</span>(tok,<span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"en"</span>)))</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Keep words with at least three letters</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>tok<span class="ot">&lt;-</span><span class="fu">tokens_select</span>(tok,<span class="at">min_nchar=</span><span class="dv">3</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Create document-feature matrix (keep in lower case)</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">dfm</span>(tok, <span class="at">tolower =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Keep relatively frequent terms</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">dfm_trim</span>(dtm, <span class="at">min_docfreq =</span> <span class="dv">10</span>)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="co">#First a word cloud</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dtm, <span class="at">random_order =</span> <span class="cn">FALSE</span>, <span class="at">rotation =</span> <span class="fl">0.25</span>,<span class="at">min_size =</span><span class="dv">1</span>,<span class="at">max_words =</span> <span class="dv">100</span>,</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">8</span>, <span class="st">"Dark2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ExploratoryTextualAnalysis_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Interestingly, when classifying the desired partners, even with four clusters, we still have 84 percent of the desired partner descriptions that come in the same cluster. Notice how one cluster emerges because the words are not English terms but Hindi ones (transliterated in English).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">rainette</span>(dtm, <span class="at">k =</span> <span class="dv">6</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rainette_explor</span>(res, <span class="at">dtm=</span>dtm, <span class="at">corpus_src=</span>corpus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="rainette_4clusters_partner.PNG" class="img-fluid"></p>
+</section>
+<section id="stratifying-by-gender" class="level3">
+<h3 class="anchored" data-anchor-id="stratifying-by-gender">Stratifying by gender</h3>
+<p>Instead of trying to analyse whether these clusters correspond a posteriori to male or female scripts of the ideal partner, we may want to stratify a priori our sample between male and female profiles and see whether the aspirations of the desired partner are any different.</p>
+<p>With the word cloud, try to interpret the gendered aspirations of the desired partner!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Textual analysis of the desired partner differentiating by gender---------------------------------------------------------</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#First, add the sex information to the corpus</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">docvars</span>(corpus, <span class="st">"Sex"</span>) <span class="ot">&lt;-</span> sample<span class="sc">$</span>Sex</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>tok2 <span class="ot">&lt;-</span> corpus <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus_subset</span>(Sex <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">remove_symbols=</span><span class="cn">TRUE</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">remove_numbers =</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"en"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_select</span>(<span class="at">min_nchar=</span><span class="dv">3</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>dfmat2 <span class="ot">&lt;-</span> <span class="fu">dfm</span>(tok2,<span class="at">tolower=</span>T) <span class="sc">%&gt;%</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="fu">dfm_trim</span>(<span class="at">min_termfreq =</span> <span class="dv">3</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dfmat2, <span class="at">comparison =</span> <span class="cn">TRUE</span>, <span class="at">min_size =</span><span class="dv">1</span>,<span class="at">max_words =</span> <span class="dv">40</span>,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"darkgreen"</span>, <span class="st">"darkorange"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ExploratoryTextualAnalysis_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can also look at the list of the most typical tokens used by female and male profiles respectively:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#The most typical tokens of female profiles regarding desired partner</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tstat1 <span class="ot">&lt;-</span> <span class="fu">textstat_keyness</span>(dfmat2), <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         feature     chi2            p n_target n_reference
+1         person 88.73288 0.000000e+00      115          62
+2            boy 60.00697 9.436896e-15       32           2
+3        settled 45.34756 1.649936e-11       31           6
+4            non 34.88173 3.503534e-09       23           4
+5     commitment 34.16181 5.071440e-09       18           1
+6           thin 27.86034 1.303954e-07       15           1
+7     compatible 26.59534 2.508482e-07       16           2
+8        dashing 26.59534 2.508482e-07       16           2
+9            guy 26.53958 2.581939e-07       14           0
+10         trust 24.54023 7.277429e-07       15           2
+11        worthy 24.43152 7.699868e-07       13           0
+12       amiable 21.64150 3.286631e-06       15           3
+13         human 21.46010 3.612676e-06       22           9
+14        honest 18.19730 1.991611e-05       57          55
+15        smoker 18.11712 2.077257e-05       10           0
+16 understanding 17.82373 2.423418e-05       79          88
+17    supporting 16.05262 6.160646e-05       12           2
+18       drinker 16.01698 6.277705e-05        9           0
+19           man 14.09676 1.736429e-04       11           2
+20       provide 12.80994 3.447829e-04        9           1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#The most typical tokens of male profiles regarding desired partner</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(tstat1 <span class="ot">&lt;-</span> <span class="fu">textstat_keyness</span>(dfmat2), <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             feature       chi2            p n_target n_reference
+591             life  -7.468835 6.277617e-03      117         329
+592          believe  -7.858283 5.058840e-03        8          47
+593       challenges  -8.070330 4.499591e-03        0          17
+594             term  -8.545806 3.463192e-03        0          18
+595           friend  -8.800662 3.011213e-03       10          56
+596           nature  -8.932972 2.800682e-03       16          75
+597           career  -9.574547 1.972935e-03        1          25
+598             soft  -9.841418 1.706259e-03        3          34
+599           spoken -10.513976 1.184751e-03        1          27
+600           simple -11.848578 5.770540e-04       31         128
+601          members -12.352622 4.403675e-04        0          26
+602       understand -13.057711 3.020383e-04       18          93
+603            ready -13.305163 2.646763e-04        0          28
+604           easily -13.570601 2.297558e-04        2          38
+605      comfortably -13.815948 2.016176e-04        1          34
+606 responsibilities -20.459909 6.089347e-06        0          43
+607       adjustable -20.937564 4.744981e-06        0          44
+608           family -37.486838 9.203195e-10       98         401
+609        beautiful -37.708634 8.214018e-10        0          79
+610             girl -96.464509 0.000000e+00        1         205</code></pre>
+</div>
+</div>
+<p>Finally, we may want to classify the desired partner description of male and female profiles separately:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="do">##Exploratory analysis of men</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>dfmat2male<span class="ot">&lt;-</span><span class="fu">tokens_subset</span>(tok2, Sex<span class="sc">==</span><span class="st">"Male"</span>) <span class="sc">%&gt;%</span> <span class="fu">dfm</span>(<span class="at">tolower=</span>T) <span class="sc">%&gt;%</span>  <span class="fu">dfm_trim</span>(<span class="at">min_termfreq =</span> <span class="dv">3</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>corpusmale<span class="ot">&lt;-</span><span class="fu">corpus_subset</span>(corpus,Sex<span class="sc">==</span><span class="st">"Male"</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>resmale <span class="ot">&lt;-</span> <span class="fu">rainette</span>(dfmat2male, <span class="at">k =</span> <span class="dv">6</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rainette_explor</span>(resmale, <span class="at">dtm=</span>dfmat2male, <span class="at">corpus_src=</span>corpusmale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="rainette_4clusters_male_partner.PNG" class="img-fluid"></p>
+<p>For the female profiles:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">##Exploratory analysis of women</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>dfmat2female<span class="ot">&lt;-</span><span class="fu">tokens_subset</span>(tok2, Sex<span class="sc">==</span><span class="st">"Female"</span>) <span class="sc">%&gt;%</span> <span class="fu">dfm</span>(<span class="at">tolower=</span>T) <span class="sc">%&gt;%</span>  <span class="fu">dfm_trim</span>(<span class="at">min_termfreq =</span> <span class="dv">3</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>corpusfemale<span class="ot">&lt;-</span><span class="fu">corpus_subset</span>(corpus,Sex<span class="sc">==</span><span class="st">"Female"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>resfemale <span class="ot">&lt;-</span> <span class="fu">rainette</span>(dfmat2female, <span class="at">k =</span> <span class="dv">6</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rainette_explor</span>(resfemale, <span class="at">dtm=</span>dfmat2female, <span class="at">corpus_src=</span>corpusfemale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="rainette_4clusters_female_partner.PNG" class="img-fluid"></p>
+<p>What differences do you notice?</p>
+<p>What would you do if you wanted to analyse the descriptions according to who runs the matrimonial profiles?</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
