@@ -253,7 +253,7 @@ The fourth type is a more spouse-to-be specific family description type.
 
 You can explore other salient distinctions.
 
-### Compound tokens? 
+### Compound tokens?
 
 One thing we have noticed in the course of this analysis is that some words come as single and separate tokens whereas they come as phrases, such as middle class, government sector, etc. We can try and detect these compound tokens and treat them as single terms in the analysis.
 
